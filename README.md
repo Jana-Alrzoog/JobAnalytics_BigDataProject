@@ -46,7 +46,7 @@ Main attributes include:
 ## Project Structure
 ```
 
-GroupName_BigDataProject/
+JobAnalytics_BigDataProject/
 ├── README.md
 ├── FinalReport.pdf
 ├── Presentation_slides.pdf
@@ -64,3 +64,15 @@ GroupName_BigDataProject/
 ├── sql_results.csv
 └── ml_metrics.txt
 
+---
+
+## Contributors
+- Jana Alruzuq
+- Ghadeer Alnuwaysir
+- Rana Albridi
+- Ghena Almogayad
+
+---
+
+**Course:** IT462 – Big Data Systems  
+**University:** King Saud University
