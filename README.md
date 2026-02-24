@@ -1,6 +1,11 @@
-# Analyzing LinkedIn Job Postings using Apache Spark
+```md
+<h1 align="center">Analyzing LinkedIn Job Postings using Apache Spark</h1>
 
-<img width="1301" height="465" alt="job" src="https://github.com/user-attachments/assets/61960486-db2a-4461-946e-86f66aa9f1ec" />
+<p align="center">
+<img width="900" alt="job" src="https://github.com/user-attachments/assets/61960486-db2a-4461-946e-86f66aa9f1ec" />
+</p>
+
+---
 
 ## Project Overview
 This project analyzes real-world LinkedIn job posting data using Apache Spark in a distributed big data environment.
@@ -40,19 +45,25 @@ Main attributes include:
 ---
 
 ## Project Structure
+```
+
+GroupName_BigDataProject/
 ├── README.md
 ├── FinalReport.pdf
 ├── Presentation_slides.pdf
 ├── code/
-│ ├── 01_DataPreprocessing.scala
-│ ├── 02_RDDOperations.scala
-│ ├── 03_SQLOperations.scala
-│ ├── 04_MachineLearning.scala
-│ └── utility_functions.scala
+│   ├── 01_DataPreprocessing.scala
+│   ├── 02_RDDOperations.scala
+│   ├── 03_SQLOperations.scala
+│   ├── 04_MachineLearning.scala
+│   └── utility_functions.scala
 ├── data/
-│ ├── raw_dataset.csv (download separately)
-│ └── preprocessed_dataset.parquet
+│   ├── raw_dataset.csv (download separately)
+│   └── preprocessed_dataset.parquet
 └── results/
 ├── rdd_output.txt
 ├── sql_results.csv
 └── ml_metrics.txt
+
+```
+```
