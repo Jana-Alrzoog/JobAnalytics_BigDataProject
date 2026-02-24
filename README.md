@@ -1,4 +1,3 @@
-```md
 <h1 align="center">Analyzing LinkedIn Job Postings using Apache Spark</h1>
 
 <p align="center">
@@ -65,4 +64,3 @@ GroupName_BigDataProject/
 ├── sql_results.csv
 └── ml_metrics.txt
 
-```
