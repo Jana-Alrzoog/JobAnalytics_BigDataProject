@@ -1,1 +1,21 @@
-data/*.csv
+# macOS
+.DS_Store
+
+# Data + outputs (do NOT commit)
+data/
+results/
+output/
+outputs/
+
+# Spark/Hadoop artifacts
+_SUCCESS
+*.crc
+**/_temporary/
+**/spark-warehouse/
+**/checkpoint/
+
+# Big file types
+*.parquet
+*.csv
+*.gz
+*.zip
