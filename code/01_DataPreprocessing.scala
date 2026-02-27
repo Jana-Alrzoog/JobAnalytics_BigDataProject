@@ -239,9 +239,7 @@ df_reduced
 // ---------------------------------------------------
   .withColumn("log_views",   log1p(coalesce(col("views").cast("double"),   lit(0.0))))
   .withColumn("log_applies", log1p(coalesce(col("applies").cast("double"), lit(0.0))))
-  .write.mode("overwrite").parquet("data/tmp1.parquet")
 
-spark.read.parquet("data/tmp1.parquet")
 // ---------------------------------------------------
 // (D) DateTime Decomposition
 // ---------------------------------------------------
@@ -278,7 +276,7 @@ println("\n=== TRANSFORMATION OUTPUT ===")
 println(s"Rows: ${df_final.count()}")
 println(s"Cols: ${df_final.columns.length}")
 
-val snap = df_final.limit(5).cache()
+val snap = df_final.limit(10).cache()
 
 println("\n--- TABLE 1: Job Info ---")
 snap.select("job_id", "title_clean", "company_clean", "work_type_std", "is_remote").show(5, false)
