@@ -225,7 +225,7 @@ println(s"Cols: ${df_reduced.columns.length}")
 df_reduced
   .withColumn("title_clean",    lower(trim(col("title"))))
   .withColumn("company_clean",  lower(trim(col("company_name"))))
-  .withColumn("location_clean", trim(col("location")))
+  .withColumn("location_clean", lower(trim(col("location")))) 
   .withColumn("pay_period_std", upper(trim(col("pay_period"))))
 // ---------------------------------------------------
 // (B) Binary Encoding – Remote Flag
