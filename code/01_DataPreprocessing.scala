@@ -279,19 +279,19 @@ println(s"Cols: ${df_final.columns.length}")
 val snap = df_final.limit(10).cache()
 
 println("\n--- TABLE 1: Job Info ---")
-snap.select("job_id", "title_clean", "company_clean", "work_type_std", "is_remote").show(5, false)
+snap.select("job_id", "title_clean", "company_clean", "work_type_std", "is_remote").show(10, false)
 
 println("\n--- TABLE 2: Salary Info ---")
-snap.select("job_id", "min_salary", "max_salary", "normalized_salary", "log_salary").show(5, false)
+snap.select("job_id", "min_salary", "max_salary", "normalized_salary", "log_salary").show(10, false)
 
 println("\n--- TABLE 3: Location Info ---")
-snap.select("job_id", "location_clean", "state", "pay_period_std", "formatted_experience_level").show(5, false)
+snap.select("job_id", "location_clean", "state", "pay_period_std", "formatted_experience_level").show(10, false)
 
 println("\n--- TABLE 4: Engagement ---")
-snap.select("job_id", "views", "log_views", "applies", "log_applies").show(5, false)
+snap.select("job_id", "views", "log_views", "applies", "log_applies").show(10, false)
 
 println("\n--- TABLE 5: Time & Title ---")
-snap.select("job_id", "listed_month", "listed_dow", "listed_hour", "title_len", "title_words").show(5, false)
+snap.select("job_id", "listed_month", "listed_dow", "listed_hour", "title_len", "title_words").show(10, false)
 
 println("\n=== SCHEMA: FINAL PREPROCESSED DATASET ===")
 df_final.printSchema()
