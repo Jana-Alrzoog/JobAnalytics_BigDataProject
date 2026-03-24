@@ -130,9 +130,6 @@ spark.sql("""
 // Q5: Job Engagement Analysis by Work Type
 // Question: Which employment type attracts the most applicants,
 //           and what is the application-to-view conversion rate?
-// Note: is_remote was excluded as the remote_allowed field
-//       contained mostly null values in the raw data, making
-//       remote vs on-site comparison unreliable.
 // Techniques: GROUP BY, aggregation functions, derived metric
 // ============================================================
 
