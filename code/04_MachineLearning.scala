@@ -8,26 +8,37 @@
 //              Scala 2.12.18
 //              OpenJDK 11
 // ============================================================
+import org.apache.spark.sql.functions._
+import org.apache.spark.ml.feature._
+import org.apache.spark.ml.regression._
 
-// Load dataset from Phase 2
+// ============================================================
+// 1. LOAD DATA
+// ============================================================
+
 val df = spark.read.parquet("data/preprocessed_dataset.parquet")
-println(s"Total rows loaded: ${df.count()}")
+
+println(s"Total rows: ${df.count()}")
+df.printSchema()
 
 // ============================================================
-// Step 1: Filter valid salary data
+// 2. FILTER YEARLY SALARY DATA
 // ============================================================
 
-val df_ml = df
-  .filter(col("normalized_salary").isNotNull)
-  .filter(col("normalized_salary") >= 10000.0 && col("normalized_salary") <= 1000000.0)
+val dfYearly = df.filter(
+  col("normalized_salary").isNotNull &&
+  col("normalized_salary") >= 10000.0 &&
+  col("normalized_salary") <= 1000000.0 &&
+  col("pay_period_std") === "YEARLY"
+)
 
-println(s"Rows after salary filtering: ${df_ml.count()}")
+println(s"Filtered rows: ${dfYearly.count()}")
 
 // ============================================================
-// Step 2: Select relevant features
+// 3. SELECT FEATURES
 // ============================================================
 
-val modelInput = df_ml.select(
+val modelInputY = dfYearly.select(
   col("normalized_salary"),
   col("log_views"),
   col("log_applies"),
@@ -39,8 +50,11 @@ val modelInput = df_ml.select(
   col("work_type_std")
 )
 
-// Drop nulls only from important columns
-val cleanInput = modelInput.na.drop(
+// ============================================================
+// 4. CLEAN DATA (DROP NULLS)
+// ============================================================
+
+val cleanInputY = modelInputY.na.drop(
   Seq(
     "normalized_salary",
     "log_views",
@@ -54,46 +68,47 @@ val cleanInput = modelInput.na.drop(
   )
 )
 
-println(s"Rows after cleaning: ${cleanInput.count()}")
+println(s"Rows after cleaning: ${cleanInputY.count()}")
 
 // ============================================================
-// Step 3: Train/Test Split
+// 5. TRAIN / TEST SPLIT
 // ============================================================
 
-val Array(trainRaw, testRaw) = cleanInput.randomSplit(Array(0.7, 0.3), 42)
+val Array(trainRawY, testRawY) = cleanInputY.randomSplit(Array(0.7, 0.3), 42)
 
-println(s"Training rows: ${trainRaw.count()}")
-println(s"Test rows: ${testRaw.count()}")
+println(s"Training rows: ${trainRawY.count()}")
+println(s"Test rows: ${testRawY.count()}")
 
 // ============================================================
-// Step 4: Encode categorical feature (work_type_std)
+// 6. ENCODING (work_type_std)
 // ============================================================
 
-val workTypeIndexer = new StringIndexer()
+// String Indexer
+val workTypeIndexerY = new StringIndexer()
   .setInputCol("work_type_std")
   .setOutputCol("work_type_index")
   .setHandleInvalid("keep")
 
-val indexerModel = workTypeIndexer.fit(trainRaw)
+val indexerModelY = workTypeIndexerY.fit(trainRawY)
 
-val trainIndexed = indexerModel.transform(trainRaw)
-val testIndexed = indexerModel.transform(testRaw)
+val trainIndexedY = indexerModelY.transform(trainRawY)
+val testIndexedY  = indexerModelY.transform(testRawY)
 
-// One-hot encoding
-val encoder = new OneHotEncoder()
+// One-Hot Encoder
+val encoderY = new OneHotEncoder()
   .setInputCols(Array("work_type_index"))
   .setOutputCols(Array("work_type_vec"))
 
-val encoderModel = encoder.fit(trainIndexed)
+val encoderModelY = encoderY.fit(trainIndexedY)
 
-val trainEncoded = encoderModel.transform(trainIndexed)
-val testEncoded = encoderModel.transform(testIndexed)
+val trainEncodedY = encoderModelY.transform(trainIndexedY)
+val testEncodedY  = encoderModelY.transform(testIndexedY)
 
 // ============================================================
-// Step 5: Assemble features
+// 7. FEATURE ASSEMBLY
 // ============================================================
 
-val assembler = new VectorAssembler()
+val assemblerY = new VectorAssembler()
   .setInputCols(Array(
     "log_views",
     "log_applies",
@@ -106,34 +121,72 @@ val assembler = new VectorAssembler()
   ))
   .setOutputCol("features_raw")
 
-val trainAssembled = assembler.transform(trainEncoded)
-val testAssembled = assembler.transform(testEncoded)
+val trainAssembledY = assemblerY.transform(trainEncodedY)
+val testAssembledY  = assemblerY.transform(testEncodedY)
 
 // ============================================================
-// Step 6: Feature scaling
+// 8. FEATURE SCALING
 // ============================================================
 
-val scaler = new StandardScaler()
+val scalerY = new StandardScaler()
   .setInputCol("features_raw")
   .setOutputCol("features")
   .setWithMean(true)
   .setWithStd(true)
 
-val scalerModel = scaler.fit(trainAssembled)
+val scalerModelY = scalerY.fit(trainAssembledY)
 
-val trainFinal = scalerModel.transform(trainAssembled)
-val testFinal = scalerModel.transform(testAssembled)
-
-// ============================================================
-// Step 7: Final dataset for ML
-// ============================================================
-
-val trainData = trainFinal.withColumnRenamed("normalized_salary", "label")
-val testData = testFinal.withColumnRenamed("normalized_salary", "label")
-
-trainData.select("label", "features").show(5, false)
-testData.select("label", "features").show(5, false)
+val trainFinalY = scalerModelY.transform(trainAssembledY)
+val testFinalY  = scalerModelY.transform(testAssembledY)
 
 // ============================================================
-// End of Phase 5 – Machine Learning (Person 1)
+// 9. PREPARE FINAL DATA
 // ============================================================
+
+val trainDataY = trainFinalY.withColumnRenamed("normalized_salary", "label")
+val testDataY  = testFinalY.withColumnRenamed("normalized_salary", "label")
+
+// ============================================================
+// 10. LINEAR REGRESSION
+// ============================================================
+
+val lrY = new LinearRegression()
+  .setLabelCol("label")
+  .setFeaturesCol("features")
+  .setPredictionCol("prediction_lr")
+  .setMaxIter(100)
+  .setRegParam(0.1)
+  .setElasticNetParam(0.0)
+
+val lrModelY = lrY.fit(trainDataY)
+
+println("Linear Regression model trained.")
+
+// ============================================================
+// 11. RANDOM FOREST
+// ============================================================
+
+val rfY = new RandomForestRegressor()
+  .setLabelCol("label")
+  .setFeaturesCol("features")
+  .setPredictionCol("prediction_rf")
+  .setNumTrees(50)
+  .setMaxDepth(10)
+  .setSeed(42)
+
+val rfModelY = rfY.fit(trainDataY)
+
+println("Random Forest model trained.")
+
+// ============================================================
+// 12. PREDICTIONS
+// ============================================================
+
+val lrPredictionsY = lrModelY.transform(testDataY)
+val rfPredictionsY = rfModelY.transform(testDataY)
+
+println("\n=== Linear Regression Predictions ===")
+lrPredictionsY.select("label", "prediction_lr").show(20, false)
+
+println("\n=== Random Forest Predictions ===")
+rfPredictionsY.select("label", "prediction_rf").show(20, false)
