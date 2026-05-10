@@ -55,14 +55,8 @@ JobAnalytics_BigDataProject/
 │   ├── 02_RDDOperations.scala
 │   ├── 03_SQLOperations.scala
 │   ├── 04_MachineLearning.scala
-│   └── utility_functions.scala
-├── data/
-│   ├── raw_dataset.csv (download separately)
-│   └── preprocessed_dataset.parquet
-└── results/
-├── rdd_output.txt
-├── sql_results.csv
-└── ml_metrics.txt
+
+
 ```
 ---
 
