@@ -1,0 +1,35 @@
+query_id,query_title,key_finding
+Q1,Average Salary by Work Type and Pay Period,FULL-TIME YEARLY has the most consistent avg salary of 116334 across 19556 postings
+Q1,Average Salary by Work Type and Pay Period,FULL-TIME HOURLY avg is 453601 due to outliers across 8723 postings
+Q1,Average Salary by Work Type and Pay Period,CONTRACT HOURLY avg is 104731 across 3313 postings
+Q1,Average Salary by Work Type and Pay Period,PART-TIME WEEKLY avg is 108639 across 80 postings
+Q2,Top 10 States by Average Salary,KY has highest avg salary of 750234 with 281 postings
+Q2,Top 10 States by Average Salary,SC avg salary 665632 with 262 postings
+Q2,Top 10 States by Average Salary,TX avg salary 656746 with 1954 postings and 4495 total applications
+Q2,Top 10 States by Average Salary,OK avg salary 599641 with 170 postings
+Q2,Top 10 States by Average Salary,MN avg salary 361020 with 447 postings
+Q2,Top 10 States by Average Salary,CA avg salary 337262 with 5991 postings and 11905 total applications
+Q2,Top 10 States by Average Salary,FL avg salary 249595 with 1369 postings
+Q2,Top 10 States by Average Salary,NC avg salary 207135 with 836 postings
+Q2,Top 10 States by Average Salary,WA avg salary 183123 with 1347 postings
+Q2,Top 10 States by Average Salary,NY avg salary 142192 with 3010 postings and 6964 total applications
+Q3,Salary by Experience Level vs Overall Average,Overall avg salary is 314493
+Q3,Salary by Experience Level vs Overall Average,Internship avg 963207 (outlier) with 378 postings - diff from overall +648713
+Q3,Salary by Experience Level vs Overall Average,Entry level avg 247214 with 9115 postings - diff from overall -67278
+Q3,Salary by Experience Level vs Overall Average,Mid-Senior level avg 220845 with 12864 postings - diff from overall -93648
+Q3,Salary by Experience Level vs Overall Average,Executive avg 201434 with 377 postings - diff from overall -113059
+Q3,Salary by Experience Level vs Overall Average,Director avg 172341 with 1262 postings - diff from overall -142151
+Q3,Salary by Experience Level vs Overall Average,Associate avg 81918 with 3859 postings - diff from overall -232574
+Q4,Most Common Job Titles and Their Salaries,sales manager is most common with 669 postings avg salary 118401
+Q4,Most Common Job Titles and Their Salaries,customer service has 473 postings avg salary 40889
+Q4,Most Common Job Titles and Their Salaries,project manager has 350 postings avg salary 110955
+Q4,Most Common Job Titles and Their Salaries,assistant store manager has 320 postings avg salary 45719
+Q4,Most Common Job Titles and Their Salaries,senior accountant has 241 postings avg salary 88408
+Q4,Most Common Job Titles and Their Salaries,salesperson has 204 postings avg salary 65392
+Q4,Most Common Job Titles and Their Salaries,receptionist has 200 postings avg salary 43096
+Q5,Job Engagement Analysis by Work Type,CONTRACT has highest avg applications 6.76 and application rate 21.45%
+Q5,Job Engagement Analysis by Work Type,INTERNSHIP has avg applications 4.81 and application rate 20.83%
+Q5,Job Engagement Analysis by Work Type,FULL-TIME has avg applications 1.52 and application rate 11.7%
+Q5,Job Engagement Analysis by Work Type,TEMPORARY has avg applications 1.4 and application rate 13.1%
+Q5,Job Engagement Analysis by Work Type,PART-TIME has avg applications 0.5 and application rate 6.46%
+Q5,Job Engagement Analysis by Work Type,VOLUNTEER has lowest avg applications 0.39 and application rate 5.21%

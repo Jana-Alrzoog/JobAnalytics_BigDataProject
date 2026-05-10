@@ -1,0 +1,89 @@
+================================================
+         MACHINE LEARNING RESULTS
+         IT462 - Big Data Systems
+         Analyzing LinkedIn Job Postings
+================================================
+
+=== Dataset Split ===
+Target Variable  : log_salary (natural log of annual salary)
+Pay Period Filter: YEARLY only
+Salary Range     : $10,000 - $1,000,000
+Train Set        : ~24,500 rows (70%)
+Test Set         : ~10,500 rows (30%)
+Random Seed      : 42
+
+------------------------------------------------
+
+=== Model Comparison Summary ===
+
+Model              | RMSE   | MAE    | R²
+-------------------+--------+--------+-------
+Baseline           | 0.4788 | 0.3814 | -0.0000
+Linear Regression  | 0.3787 | 0.2841 |  0.3745
+Random Forest      | 0.4009 | 0.3075 |  0.2989
+GBT                | 0.3754 | 0.2744 |  0.3852
+
+Best Model: GBT (best RMSE, MAE, and R²)
+
+Note: RMSE of ~0.37 in log-salary scale corresponds
+to approximately ±45% error in original salary scale.
+
+------------------------------------------------
+
+=== Model Hyperparameters ===
+
+Linear Regression:
+  maxIter         = 200
+  regParam        = 0.05
+  elasticNetParam = 0.1
+
+Random Forest:
+  numTrees  = 100
+  maxDepth  = 10
+  seed      = 42
+
+Gradient Boosted Trees (GBT):
+  maxIter          = 200
+  maxDepth         = 10
+  stepSize         = 0.05
+  subsamplingRate  = 0.8
+  seed             = 42
+
+------------------------------------------------
+
+=== Random Forest - Top 5 Feature Importances ===
+
+Feature              | Importance | Type
+---------------------+------------+---------------------------
+encoded_feature_11   | 0.1317     | One-Hot (state/experience)
+encoded_feature_9    | 0.1041     | One-Hot (state/experience)
+encoded_feature_12   | 0.0766     | One-Hot (state/experience)
+encoded_feature_302  | 0.0478     | TF-IDF (job title keyword)
+title_words          | 0.0450     | Title word count
+
+------------------------------------------------
+
+=== GBT - Top 5 Feature Importances ===
+
+Feature              | Importance | Type
+---------------------+------------+------------------------
+title_len            | 0.0636     | Title character length
+listed_hour          | 0.0426     | Hour of posting
+log_views            | 0.0418     | Posting engagement
+title_words          | 0.0294     | Title word count
+listed_dow           | 0.0202     | Day of week
+
+------------------------------------------------
+
+=== Error Analysis - GBT Predictions (Sample) ===
+
+Actual Salary | Predicted Salary | Error
+--------------+------------------+-----------------------------
+$12,700       | $151,878         | Very high (undervaluation)
+$31,500       | $53,031          | Moderate overestimation
+$40,000       | $97,376          | High overestimation
+
+Observation: Model overestimates low salaries (regression toward mean).
+Best performance in middle salary range ($52,000 - $125,000).
+
+================================================
