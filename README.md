@@ -74,6 +74,11 @@ JobAnalytics_BigDataProject/
 - Rana Albridi
 - Ghena Almogayad
 
+## Data Access
+Due to file size limitations, datasets are available via Google Drive:
+
+- 📁 [Google Drive – Dataset Files](https://drive.google.com/drive/folders/1F_KEEZ8JrIi7R4ANPA0UaIjpAif9pqst?usp=sharing)
+- 💻 [GitHub Repository](https://github.com/Jana-Alrzoog/JobAnalytics_BigDataProject.git)
 ---
 
 **Course:** IT462 – Big Data Systems  
